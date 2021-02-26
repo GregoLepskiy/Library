@@ -1,0 +1,105 @@
+a{
+    color: brown;
+    text-decoration: none;
+    font: 120%;
+    font-family: 'Roboto', sans-serif;
+}
+
+a:hover{
+    color: red;
+    text-decoration: underline;
+}
+
+header, main, footer{
+    min-width: 855px;
+    padding: 15px;
+    font-family: 'Roboto', sans-serif;
+}
+
+h1{
+    font: 300% italic;
+    font-family: 'Akaya Telivigala', cursive;
+}
+
+header, footer {
+    background-color:#D1E9F0;
+    overflow: auto;
+}
+
+header h1{
+    float: left;
+    width: 570px;
+}
+
+header nav{
+    padding-top: 20px;
+    float: right;
+    width: 285px;
+}
+
+main{
+    background-color: #fff;
+    overflow: auto;
+    min-height: 68%;
+}
+
+.search{
+    display: flex;
+    margin-left: 25%;
+    margin-bottom: 10px;
+}
+
+main input{
+    border: 2px solid #007ACC;
+    border-radius: 10px;
+    background-color: #fff;
+    min-height: 30px;
+    width: 60%;
+    padding: 5px;
+    padding-right: 10px;
+    margin: 1px;
+    font-size: 20px;
+    font-family: 'Roboto', sans-serif;
+    text-align: center;
+    color: #007ACC;
+    outline: none;
+}
+
+main button:hover{
+    box-shadow: 1px 1px 1px 1px #007ACC;
+}
+
+main button{
+    font-size: 20px;
+    font-family: 'Roboto', sans-serif;
+    border: 2px solid #007ACC;
+    border-radius: 10px;
+    background-color: #007ACC;
+    color: ghostwhite;
+    min-height: 30px;
+    text-align: center;
+    width: auto;
+    margin: 1px;
+    padding: 5px;
+    outline: none;
+}
+
+footer h5{
+    padding-bottom: 20px;
+    font: 120% bold;
+    font-family: 'Roboto', sans-serif;
+}
+
+footer p, li{
+    padding-top: 5px;
+}
+
+.contacts{
+    float: left;
+    width: 570px;
+}
+
+.sitemap{
+    float: right;
+    width: 285px;
+}
