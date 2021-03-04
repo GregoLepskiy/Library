@@ -127,12 +127,15 @@ button:target{
 
 .content li {
     display: flex;
+    margin-top: 15px;
+    margin-left: 30px;
+    margin-bottom: 10px;
 }
 
 .book {    
     position: relative;
     overflow: hidden;
-    margin-left: 20px;
+    margin-left: 30px;
     padding-top: 10px;
     padding-bottom: 5px;
     box-shadow: #DB2122 0px 0px 0px 1px inset;
