@@ -1,7 +1,6 @@
 var express = require("express"),
     http = require("http"),
-    mongoose = require("mongoose"),
-    app = express();/*,
+    app = express(),
     books = [
         {
             "name" : "Капитанская дочка",
@@ -38,50 +37,16 @@ var express = require("express"),
             "author" : "Н.В. Гоголь",
             "image" : "./images/nvgogol_mertvie-dushi.jpg"
         }
-    ];*/
+    ];
 app.use(express.static(__dirname + "/client"));
-var bookSchema = mongoose.Schema({
-    name: String,
-    author: String,
-    image: String
-});
-var Book = mongoose.model("Book", bookSchema);
 http.createServer(app).listen(3000);
 app.get("/books.json", function (req, res) {
-    Book.find({}, function (err, book) {
-        if (err !== null) {
-            console.log(err);
-        } else {
-            res.json(book);
-        }
-    });
+    res.json(books);
 });
 app.use(express.urlencoded({extended: true}));
-mongoose.connect('mongodb://localhost/library', {
-    useNewUrlParser: true,
-    useCreateIndex: true,
-    useUnifiedTopology: true
-    }).then(res => {
-        console.log('DB is connected')
-    }).catch(err => {
-        console.log(Error, err.message);
-    });
 app.post("/books", function (req, res) {
-    console.log(req.body);
-    var newBook = new Book({"name" : req.body.name,
-                            "author" : req.body.author,
-                            "image" : req.body.image});
-    newBook.save(function (err, result) {
-        if (err !== null) {
-            console.log(err);
-            res.send("ERROR");
-        } else {
-            Book.find({}, function (err, result) {
-                if (err !== null) {
-                    res.send("ERROR");
-                }
-                res.json(result);
-            });
-        }
-    });
+    var newBook = req.body;
+    console.log(newBook);
+    books.push(newBook);
+    res.json({"message" : "You're located on server"});
 });

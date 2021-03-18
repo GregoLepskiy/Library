@@ -7,8 +7,9 @@ body{
 header h1{
     color: white;
     font-family: 'Oswald', sans-serif;
-    font-size: 50px;
-    margin-left: 20px;
+    font-size: 300%;
+    padding-left: 20px;
+    white-space: nowrap;
 }
 
 .container a {
@@ -23,6 +24,7 @@ header h1{
     display: flex;
     /*background-color: #FEC138;*/
     background-color:rgb(255, 145, 55);
+    width: 100%;
 }
 
 .search{
@@ -74,6 +76,10 @@ button:target{
 
 .authorization {
     margin-top: 15px;
+    margin-right: 3%;
+    margin-left: auto;
+    padding-right: 10px;
+    padding-left: 2%;
     text-align: right;
 }
 
@@ -123,6 +129,11 @@ button:target{
 
 .content {
     display: flex;
+    width: 100%;
+}
+
+.content ul {
+    width: 100%;
 }
 
 .content li {
@@ -135,7 +146,7 @@ button:target{
 .book {    
     position: relative;
     overflow: hidden;
-    margin-left: 30px;
+    margin-left: 2%;
     padding-top: 10px;
     padding-bottom: 5px;
     box-shadow: #DB2122 0px 0px 0px 1px inset;
@@ -157,6 +168,8 @@ button:target{
     font-weight: 900;
 }
 
+
+
 .image_book:hover {
     transform: scale(1.05);
     transition: 1s all;
@@ -164,20 +177,24 @@ button:target{
     padding-bottom: 7px;
 }
 
+.image_book {
+    transition: 1s all;
+}
+
 .width_220 {
-    width: 220px;
+    width: 14.1%;
 }
 
 .height_350 {
-    height: 350px;
+    height: auto;
 }
 
 .width_200 {
-    width: 200px;
+    width: 90.9%;
 }
 
 .height_305 {
-    height: 305px;
+    height: auto;
 }
 
 /*  footer  */
