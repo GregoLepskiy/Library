@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="ru">
     <head>
-        <title>E-library</title>
+        <title>Bynhbufyn</title>
         <meta charset="utf-8">
         <link rel="stylesheet" type="text/css" href="./css/reset.css">
         <link rel="stylesheet" type="text/css" href="./css/style.css">
@@ -15,26 +15,25 @@
     <body>
         <header>
             <div class="container">
-                <h1><a href="index.html">E-library</a></h1>
+                <div class="name">
+                    <h1><a href="index.html">BYNHBUFYN</a></h1>
+                </div>
                 <div class="search">
                     <input class="searchinput" type="text">
                     <button class="searchbutton"><img src="./images/search_white.png" width="30" height="30"
                         alt="Search"></button>
                 </div>
                 <div class="authorization">
-                    <a href="#">Регистрация | Вход</a>
+                    <a href="registration.html">Регистрация | Вход</a>
                 </div>
             </div>
             <div class="headermenu">
-                <a href="books.html">Книги</a>
-                <a href="audiobooks.html">Аудиокниги</a>
-                <a href="podcasts.html">Подкасты</a>
             </div>
         </header>
         <main>
             <div class="page">
                 <div class="mainpagehead">
-                    <h2>Подборка</h2>
+                    <h2 id="main_name"></h2>
                 </div>
                 <div class="main_line">
                     <hr id="main_page_hr">
@@ -44,28 +43,30 @@
 
                     </div>
                 </div>
+                <div class="main_line">
+                    <hr id="main_page_hr">
+                </div>
             </div>
         </main>
         <footer>
             <div class="footercontainer">
-                <div class="footertable">
+                <div class="contacts">
+                    <h1><a href="index.html">BYNHBUFYN</a></h1>
                     <ul>
-                        <li class="contacts">
-                            <h1><a href="index.html">E-library</a></h1>
-                            <ul>
-                                <li><a class="flink" href="#">Контакты</a></li>
-                                <li><a class="flink" href="#">О нас</a></li>
-                                <li><a class="flink" href="https://vk.com/donut/cinoview">Поддежать нас</a></li>
-                            </ul>
-                        </li>
-                        <li class="sitemap">
-                            <h1>Карта сайта:</h1>
-                            <ul>
-                                <li><a class="flink" href="index.html">Домой</a></li>
-                                <li><a class="flink" href="#">FaQ</a></li>
-                                <li><a class="flink" href="#">Кекподдержка</a></li>
-                            </ul>
-                        </li>
+                        <li><a class="flink contact">Контакты</a></li>
+                        <li><a class="flink about">О нас</a></li>
+                        <li><a class="flink" href="https://vk.com/donut/cinoview">Поддежать нас</a></li>
+                    </ul>
+                </div>
+                <div class="information">
+
+                </div>
+                <div class="sitemap">
+                    <h1>Карта сайта:</h1>
+                    <ul>
+                        <li><a class="flink" href="index.html">Домой</a></li>
+                        <li><a class="flink faq">FaQ</a></li>
+                        <li><a class="flink kek" href="#">Кекподдержка</a></li>
                     </ul>
                 </div>
             </div>
