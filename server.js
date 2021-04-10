@@ -87,6 +87,36 @@ var express = require("express"),
             "authorID" : "iabrodskiy",
             "image" : "./images/iabrodskiy_brodskiy-v-stile-dzhaz.jpg",
             "type" : "audiobook"
+        },
+        {
+            "name" : "Бродский в стиле джаз",
+            "authorID" : "iabrodskiy",
+            "image" : "./images/iabrodskiy_brodskiy-v-stile-dzhaz.jpg",
+            "type" : "audiobook"
+        },
+        {
+            "name" : "Бродский в стиле джаз",
+            "authorID" : "iabrodskiy",
+            "image" : "./images/iabrodskiy_brodskiy-v-stile-dzhaz.jpg",
+            "type" : "audiobook"
+        },
+        {
+            "name" : "Бродский в стиле джаз",
+            "authorID" : "iabrodskiy",
+            "image" : "./images/iabrodskiy_brodskiy-v-stile-dzhaz.jpg",
+            "type" : "audiobook"
+        },
+        {
+            "name" : "Бродский в стиле джаз",
+            "authorID" : "iabrodskiy",
+            "image" : "./images/iabrodskiy_brodskiy-v-stile-dzhaz.jpg",
+            "type" : "audiobook"
+        },
+        {
+            "name" : "Бродский в стиле джаз",
+            "authorID" : "iabrodskiy",
+            "image" : "./images/iabrodskiy_brodskiy-v-stile-dzhaz.jpg",
+            "type" : "audiobook"
         }
     ];
     
