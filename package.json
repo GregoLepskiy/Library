@@ -1,9 +1,9 @@
 {
-  "name": "Library",
+  "name": "Bynhbufyn",
   "version": "1.0.0",
   "description": "",
   "dependencies": {
     "express": "^4.17.1",
-    "mongoose": "^5.11.18"
+    "mongoose": "^5.12.3"
   }
 }

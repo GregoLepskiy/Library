@@ -1,5 +1,6 @@
 var express = require("express"),
     http = require("http"),
+    mongoose = require("mongoose"),
     app = express(),
     authors = [
         {
@@ -123,9 +124,45 @@ var express = require("express"),
 http.createServer(app).listen(3000);
 app.use(express.static(__dirname + "/client"));
 app.use(express.urlencoded({extended: true}));
+mongoose.connect('mongodb://localhost/bynhbufyn', {
+    useNewUrlParser : true,
+    useCreateIndex : true,
+    useUnifiedTopology : true
+}).then(res => {
+    console.log("DB is connected");
+}).catch(err => {
+    console.log(Error, err.message);
+});
+var BookSchema = mongoose.Schema({
+        name : String,
+        authorID : String,
+        image : String,
+        type : String,
+        description : String
+    }),
+    AuthorSchema = mongoose.Schema({
+        name : String,
+        surname : String,
+        patronymic : String,
+        id : String
+    });
+var Book = mongoose.model("Book", BookSchema),
+    Author = mongoose.model("Author", AuthorSchema);
 app.get("/books.json", function (req, res) {
-    res.json(books);
+    Book.find({}, function (err, Books) {
+        if (err !== null) {
+            console.log("Error: " + err.message);
+        } else {
+            res.json(Books);
+        }
+    });
 });
 app.get("/authors.json", function (req, res) {
-    res.json(authors);
+    Author.find({}, function (err, Authors) {
+        if (err !== null) {
+            console.log("Error: " + err.message);
+        } else {
+            res.json(Authors);
+        }
+    });
 });

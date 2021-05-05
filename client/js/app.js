@@ -25,6 +25,7 @@ var main = function(){
         "content" : function (callback) {
             var $content = $("<ul>");
             $.getJSON("authors.json", function (authors) {
+                console.log(authors);
                 $.getJSON("books.json", function (books) {
                     $content.append("<h2>Книги</h2>");
                     for (let i = 0; i < books.length; i++) {
@@ -272,6 +273,7 @@ var main = function(){
                 $spanElement.addClass("active");
                 $(".content").empty();
                 $("#main_name").html(tab.name);
+                $("title").text(tab.name);
                 tab.content(function (err, $content) {
                     if (err !== null) {
                         alert("Возникла ошибка при обработке запроса: " + err);
@@ -308,7 +310,7 @@ var main = function(){
                                     '</div>' + 
                                 '</div><br>' + 
                                 '<div class="book_inf">' +
-                                    '<p>Сделай его как описание, чтобы потом менять текст.</p>' + 
+                                    '<p>' + books[i].description + '</p>' + 
                                 '</div>' +  
                             '</div>';
                     $(".content").html(link);
@@ -450,9 +452,10 @@ var main = function(){
             return false;
         });
         $(".searchinput").on("keypress", function (event) {
-            if (event.keyCode === 13)
+            if (event.keyCode === 13){
                 butfunc();
-            return false;
+                return false;
+            }
         });
         $(".contact").on("click", function () {
             $(".information").html("");

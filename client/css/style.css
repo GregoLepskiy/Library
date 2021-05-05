@@ -11,6 +11,163 @@ body {
 /**/
 /**/
 /**/
+/* menu admin */
+/**/
+/**/
+/**/
+
+.menu-mobile:after {
+    content: "\f0c9";
+    padding: 0;
+    float: right;
+    position: relative;
+    transform: translateY(-25%);
+}
+.menu-dropdown-icon:before {
+    content: "\f078";
+    display: none;
+    cursor: pointer;
+    float: right;
+    padding: 0px 10px;
+    margin: 0px;
+    background: #922f1b;
+}
+.menu > ul {
+    width: 100%;
+    list-style: none;
+    padding: 0;
+    position: relative;
+    box-sizing: border-box;
+}
+.menu > ul:before,
+.menu > ul:after {
+    content: "";
+    display: table;
+}
+.menu > ul:after {
+    clear: both;
+}
+.menu > ul > li {
+    float: left;
+    background: #e1ad95;
+    padding: 0;
+    margin: 0;
+    transition: .2s ease-in-out;
+}
+.menu > ul > li a,
+.menu-mobile {
+    text-decoration: none;
+    padding: 0px 10px;
+    display: block;
+    transition: .2s ease-in-out;
+}
+.menu-mobile {
+    display: none;
+}
+.menu > ul > li:hover a {
+    color: #e3e3e3;
+}
+.menu > ul > li > ul {
+    display: none;
+    width: 100%;
+    background: #e1ad95;
+    padding: 10px;
+    position: absolute;
+    z-index: 99;
+    left: 0;
+    margin: 0;
+    list-style: none;
+    box-sizing: border-box;
+}
+.menu > ul > li > ul:before,
+.menu > ul > li > ul:after {
+    content: "";
+    display: table;
+}
+.menu > ul > li > ul:after {
+    clear: both;
+}
+.menu > ul > li > ul > li {
+    margin: 0;
+    padding-bottom: 0;
+    list-style: none;
+    width: 25%;
+    background: none;
+    float: left;
+}
+.menu > ul > li > ul > li a {
+    padding: 10px;
+    display: block;
+    border-bottom: 1px solid #922f1b;
+}
+.menu > ul > li > ul > li a:hover {
+    color: #922f1b;
+    border-bottom: 1px solid #e3e3e3;
+}
+.menu > ul > li > ul.normal-sub {
+    width: 180px;
+    left: auto;
+    padding: 10px;
+}
+.menu > ul > li > ul.normal-sub > li {
+    width: 100%;
+}
+.menu > ul > li > ul.normal-sub > li a {
+    border: 0;
+    padding: 10px;
+}
+@media only screen and (max-width: 768px) {
+    .menu-container {
+        width: 100%;
+    }
+    .menu-mobile {
+        display: block;
+    }
+    .menu-dropdown-icon:before {
+        display: block;
+    }
+    .menu > ul {
+        display: none;
+    }
+    .menu > ul > li {
+        width: 100%;
+        float: none;
+        display: block;
+        background: #e1ad95;
+        border-top: 2px solid #FFF;
+        border-bottom: 2px solid #FFF;
+    }
+    .menu > ul > li a {
+        padding: 20px;
+        width: 100%;
+        display: block;
+        color: #000;
+    }
+    .menu > ul > li > ul {
+        position: relative;
+    }
+    .menu > ul > li > ul.normal-sub {
+        width: 100%;
+         
+    }
+    .menu > ul > li > ul > li {
+        float: none;
+        width: 100%;
+    }
+    .menu > ul > li > ul:not(.normal-sub) > li {
+        margin-top: 20px;
+    } 
+    .menu > ul > li > ul > li:first-child {
+        margin: 0;
+    }
+    .menu .show-on-mobile {
+        display: block;
+    }
+}  
+
+/**/
+/**/
+/**/
 /* header */
 /**/
 /**/
@@ -356,4 +513,91 @@ footer .information {
 footer .sitemap {
     width: 25%;
     text-align: right;
+}
+
+/**/
+/**/
+/*auth*/
+/**/
+/**/
+
+main .pages {
+    padding-top: 100px;
+    padding-bottom: 100px;
+}
+
+.pages .auth {
+    width: 200px;
+    padding-top: 20px;
+    padding-left: 70px;
+    padding-right: 70px;
+    padding-bottom: 20px;
+    height: auto;
+    border: #922f1b solid 3px;
+    border-radius: 20px;
+    background-color: #e1ad95;
+    margin: auto;
+}
+
+.auth .soder{
+    width: 100%;
+    margin: auto;
+}
+
+.soder p{
+    font-family: 'Roboto', sans-serif;
+    color: #922f1b;
+    font-weight: 900;
+}
+
+.soder .log{
+    padding-bottom: 15px;
+}
+
+.soder .pass{
+    padding-bottom: 10px;
+}
+
+.soder .login {
+    width: 100%;
+    border: 0px;
+    border-radius: 10px;
+    background-color: #e3e3e3;
+    color: #922f1b;
+    padding: 5px;
+    outline: none;
+}
+
+.soder .but{
+    width: 100%;
+    padding-left: 6px;
+}
+
+.but .but_st{
+    padding: 5px;
+    border: 0px;
+    border-radius: 10px;
+    background-color: #e3e3e3;
+    outline: none;
+    font-family: 'Roboto', sans-serif;
+    color: #922f1b;
+    font-size: 14px;
+    font-weight: 900;
+}
+
+.but .but_st:active{
+    transition: 0.3s all;
+    transform: scale(1.1);
+    opacity: .8;
+}
+
+.but .enter{
+    width: 24%;
+    margin-right: 0px;
+}
+
+.but .regis{
+    width: 74%;
+    margin-left: 0px;
+    margin-right: 0px;
 }
