@@ -1,128 +1,19 @@
 var express = require("express"),
     http = require("http"),
     mongoose = require("mongoose"),
-    app = express(),
-    authors = [
-        {
-            "name" : "Александр",
-            "surname" : "Пушкин",
-            "patronymic" : "Сергеевич",
-            "id" : "aspushkin"
-        },
-        {
-            "name" : "Федор",
-            "surname" : "Достоевский",
-            "patronymic" : "Михайлович",
-            "id" : "fmdostoevskiy"
-        },
-        {
-            "name" : "Анджей",
-            "surname" : "Сапковский",
-            "patronymic" : "-",
-            "id" : "asapkovskiy"
-        },
-        {
-            "name" : "Лев",
-            "surname" : "Толстой",
-            "patronymic" : "Николаевич",
-            "id" : "lntolstoy"
-        },
-        {
-            "name" : "Иосиф",
-            "surname" : "Бродский",
-            "patronymic" : "Александрович",
-            "id" : "iabrodskiy"
-        }
-    ],
-    books = [
-        {
-            "name" : "Капитанская дочка",
-            "authorID" : "aspushkin",
-            "image" : "./images/aspushkin_kapitanskaya-dochka.jpg",
-            "type" : "book"
-        },
-        {
-            "name" : "Преступление и наказание",
-            "authorID" : "fmdostoevskiy",
-            "image" : "./images/fmdostoevskiy_prestuplenie-i-nakazanie.jpg",
-            "type" : "book"
-        },
-        {
-            "name" : "Сага о Ведьмаке",
-            "authorID" : "asapkovskiy",
-            "image" : "./images/asapkovskiy_saga-o-vedmake.jpg",
-            "type" : "book"
-        },
-        {
-            "name" : "Сага о Ведьмаке",
-            "authorID" : "asapkovskiy",
-            "image" : "./images/asapkovskiy_saga-o-vedmake.jpg",
-            "type" : "book"
-        },
-        {
-            "name" : "Сага о Ведьмаке",
-            "authorID" : "asapkovskiy",
-            "image" : "./images/asapkovskiy_saga-o-vedmake.jpg",
-            "type" : "book"
-        },
-        {
-            "name" : "Сага о Ведьмаке",
-            "authorID" : "asapkovskiy",
-            "image" : "./images/asapkovskiy_saga-o-vedmake.jpg",
-            "type" : "book"
-        },
-        {
-            "name" : "Война и мир",
-            "authorID" : "lntolstoy",
-            "image" : "./images/lntolstoy_voina-i-mir.jpg",
-            "type" : "book"
-        },
-        {
-            "name" : "Евгений Онегин",
-            "authorID" : "aspushkin",
-            "image" : "./images/aspushkin_evgeniy-onegin.jpg",
-            "type" : "audiobook"
-        },
-        {
-            "name" : "Бродский в стиле джаз",
-            "authorID" : "iabrodskiy",
-            "image" : "./images/iabrodskiy_brodskiy-v-stile-dzhaz.jpg",
-            "type" : "audiobook"
-        },
-        {
-            "name" : "Бродский в стиле джаз",
-            "authorID" : "iabrodskiy",
-            "image" : "./images/iabrodskiy_brodskiy-v-stile-dzhaz.jpg",
-            "type" : "audiobook"
-        },
-        {
-            "name" : "Бродский в стиле джаз",
-            "authorID" : "iabrodskiy",
-            "image" : "./images/iabrodskiy_brodskiy-v-stile-dzhaz.jpg",
-            "type" : "audiobook"
-        },
-        {
-            "name" : "Бродский в стиле джаз",
-            "authorID" : "iabrodskiy",
-            "image" : "./images/iabrodskiy_brodskiy-v-stile-dzhaz.jpg",
-            "type" : "audiobook"
-        },
-        {
-            "name" : "Бродский в стиле джаз",
-            "authorID" : "iabrodskiy",
-            "image" : "./images/iabrodskiy_brodskiy-v-stile-dzhaz.jpg",
-            "type" : "audiobook"
-        },
-        {
-            "name" : "Бродский в стиле джаз",
-            "authorID" : "iabrodskiy",
-            "image" : "./images/iabrodskiy_brodskiy-v-stile-dzhaz.jpg",
-            "type" : "audiobook"
-        }
-    ];
+    booksController = require("./controllers/bookController.js"),
+    authorsController = require("./controllers/authorController.js"),
+    usersController = require("./controllers/userController.js"),
+    app = express();
     
 http.createServer(app).listen(3000);
 app.use(express.static(__dirname + "/client"));
+app.use('/', express.static(__dirname + "/client"));
+app.use('/authors/:authorID', express.static(__dirname + "/client"));
+app.use('/authors/:authorID/books/:bookID', express.static(__dirname + '/client'));
+app.use('/users/:email/authors/:authorID/books/:bookID', express.static(__dirname + '/client'));
+app.use('/users/:email/authors/:authorID', express.static(__dirname + '/client'));
+app.use('/users/:email/', express.static(__dirname + '/client'));
 app.use(express.urlencoded({extended: true}));
 mongoose.connect('mongodb://localhost/bynhbufyn', {
     useNewUrlParser : true,
@@ -130,39 +21,41 @@ mongoose.connect('mongodb://localhost/bynhbufyn', {
     useUnifiedTopology : true
 }).then(res => {
     console.log("DB is connected");
+    console.log(res);
 }).catch(err => {
     console.log(Error, err.message);
 });
-var BookSchema = mongoose.Schema({
-        name : String,
-        authorID : String,
-        image : String,
-        type : String,
-        description : String
-    }),
-    AuthorSchema = mongoose.Schema({
-        name : String,
-        surname : String,
-        patronymic : String,
-        id : String
-    });
-var Book = mongoose.model("Book", BookSchema),
-    Author = mongoose.model("Author", AuthorSchema);
-app.get("/books.json", function (req, res) {
-    Book.find({}, function (err, Books) {
-        if (err !== null) {
-            console.log("Error: " + err.message);
-        } else {
-            res.json(Books);
-        }
-    });
-});
-app.get("/authors.json", function (req, res) {
-    Author.find({}, function (err, Authors) {
-        if (err !== null) {
-            console.log("Error: " + err.message);
-        } else {
-            res.json(Authors);
-        }
-    });
-});
+
+app.get("/authors.json", authorsController.index);
+app.post("/authors", authorsController.create);
+app.get("/authors/:authorID", authorsController.show);
+app.put("/authors/:authorID", authorsController.update);
+app.delete("/authors/:id", authorsController.destroy);
+app.get("/authors/:authorID/authors.json", authorsController.index);
+app.get("/users/:email/authors.json", authorsController.index);
+app.get("/authors/:authorID/books/:bookID/authors.json", authorsController.index);
+app.get("/users/:email/authors/:authorID/authors.json", authorsController.index);
+app.get("/users/:email/authors/:authorID/books/:bookID/authors.json", authorsController.index);
+
+
+app.get("/books.json", booksController.index);
+app.get("/users/:email/books.json", booksController.index);
+app.post("/books", booksController.create);
+
+app.get("/authors/:authorID/books.json", booksController.index);
+app.get("/users/:email/authors/:authorID/books.json", booksController.index);
+app.post("/authors/:authorID/books", booksController.create);
+app.put("/authors/:authorID/books/:id", booksController.update);
+app.delete("/authors/:authorID/books/:id", booksController.destroy);
+app.get("/authors/:authorID/books/:bookID/books.json", booksController.index);
+app.get("/authors/:authorID/books/:bookID", booksController.show);
+app.get("/users/:email/authors/:authorID/books/:bookID/books.json", booksController.index);
+
+app.get("/users.json", usersController.index);
+app.post("/users", usersController.create);
+app.get("/users/:email", usersController.show);
+app.put("/users/:email", usersController.update);
+app.put("/users/:email/authors/:authorID/books/:bookID", usersController.addBook);
+app.delete("/users/:email/:id", usersController.deleteBook);
+app.delete("/users/:email", usersController.destroy);
+app.get("/users/:email/users.json", usersController.index);

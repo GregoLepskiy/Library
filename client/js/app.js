@@ -12,22 +12,27 @@ var main = function(){
             return result;
         },
         author_name = function (authors, book) {
-            for (var h = 0; h < authors.length; h++) {
-                if (authors[h].id === book.authorID) {
-                    console.log(fio(authors[h]));
-                    return fio(authors[h]);
+            for (let aut of authors)
+                for (let autId of book.authorID){
+                    if (aut._id === autId) {
+                        console.log(fio(aut));
+                        return fio(aut);
+                    }
                 }
-            }
-        }
-
-    tabs.push({
-        "name" : "Подборка",
-        "content" : function (callback) {
+        },
+        author_authorid = function (authors, book){
+            for (let aut of authors)
+                for (let autId of book.authorID){
+                    if (aut._id === autId) {
+                        console.log(aut.authorID);
+                        return aut.authorID;
+                    }
+                }
+        },
+        pushBook = function (callback) {
             var $content = $("<ul>");
             $.getJSON("authors.json", function (authors) {
-                console.log(authors);
                 $.getJSON("books.json", function (books) {
-                    $content.append("<h2>Книги</h2>");
                     for (let i = 0; i < books.length; i++) {
                         if (books[i].type === "book") {
                             let $li = $("<li>");
@@ -37,11 +42,12 @@ var main = function(){
                                         $image_div = $("<div>").addClass("image_div"),
                                         $image = $("<img>").addClass("image_book width_200 height_305"),
                                         $info = $("<div>").addClass("info"),
-                                        $book_name = $("<a>").text(books[i].name),
-                                        $author_name = $("<a>").text(author_name(authors, books[i]));
+                                        $book_name = $("<a>").text(books[i].name).attr("alt", books[i].bookID).addClass("bk_name").attr("href", "authors/" + author_authorid(authors, books[i]) + "/books/" + books[i].bookID + "/book.html"),
+                                        $author_name = $("<a>").text(author_name(authors, books[i])).attr("alt", author_authorid(authors, books[i])).addClass("aut_name").attr("href", "authors/" + author_authorid(authors, books[i]) + "/author.html");
                                     $book_name.attr("id", "book_href");
+                                    $author_name.attr("id", "author_href");
                                     $info.append($book_name).append("<br>").append($author_name);
-                                    $image.attr("src", books[i].image).attr("alt", books[i].name + ',' + author_name(authors, books[i]));
+                                    $image.attr("src", books[i].picture).attr("alt", books[i].name + ',' + author_name(authors, books[i]));
                                     $image_div.append($image);
                                     $book.append($image_div).append($info);
                                     $li.append($book);
@@ -50,212 +56,156 @@ var main = function(){
                                     if (i === books.length)
                                         break;
                                     if (j === 4) {
-                                        i = books.length;
+                                        i--;
                                     }
-                                }
-                            }
-                            $content.append($li);
-                        }
-                    }
-                    $content.append("<h2>Аудиокниги</h2>");
-                    for (let i = 0; i < books.length; i++) {
-                        if (books[i].type === "audiobook") {
-                            let $li = $("<li>");
-                            for (let j = 0; j < 5; j++) {
-                                if (books[i].type === "audiobook") {
-                                    let $book = $("<div>").addClass("audio"),
-                                        $image_div = $("<div>").addClass("image_div"),
-                                        $image = $("<img>").addClass("image_audio width_200 height_200"),
-                                        $info = $("<div>").addClass("info"),
-                                        $book_name = $("<a>").text(books[i].name),
-                                        $author_name = $("<a>").text(author_name(authors, books[i]));
-                                    $book_name.attr("id", "book_href");
-                                    $info.append($book_name).append("<br>").append($author_name);
-                                    $image.attr("src", books[i].image).attr("alt", books[i].name + ',' + author_name(authors, books[i]));
-                                    $image_div.append($image);
-                                    $book.append($image_div).append($info);
-                                    $li.append($book);
+                                } else {
+                                    if (j !== 0) j--;
                                     i++;
-                                    console.log('i:' + i);
-                                    if (i === books.length)
-                                        break;
-                                    if (j === 4) {
-                                        i = books.length;
-                                    }
-                                }
-                            }
-                            $content.append($li);
-                        }
-                    }
-                    $content.append("<h2>Подкасты</h2>");
-                    for (let i = 0; i < books.length; i++) {
-                        if (books[i].type === "podcast") {
-                            let $li = $("<li>");
-                            for (let j = 0; j < 5; j++) {
-                                if (books[i].type === "podcast") {
-                                    let $book = $("<div>").addClass("audio"),
-                                        $image_div = $("<div>").addClass("image_div"),
-                                        $image = $("<img>").addClass("image_audio width_200 height_200"),
-                                        $info = $("<div>").addClass("info"),
-                                        $book_name = $("<a>").text(books[i].name),
-                                        $author_name = $("<a>").text(author_name(authors, books[i]));
-                                    $book_name.attr("id", "book_href");
-                                    $info.append($book_name).append("<br>").append($author_name);
-                                    $image.attr("src", books[i].image).attr("alt", books[i].name + ',' + author_name(authors, books[i]));
-                                    $image_div.append($image);
-                                    $book.append($image_div).append($info);
-                                    $li.append($book);
-                                    i++;
-                                    console.log('i:' + i);
-                                    if (i === books.length)
-                                        break;
-                                    if (j === 4) {
-                                        i = books.length;
-                                    }
+                                    if (i === books.length) break;
                                 }
                             }
                             $content.append($li);
                         }
                     }
                 });
-                callback(null, $content);
-            }).fail(function (jqXHR, textStatus, error) {
-                console.log(jqXHR);
-                console.log(textStatus);
-                callback(error, null);
+                callback($content);
             });
+        },
+        pushAudio = function (callback) {
+            var $content = $("<ul>");
+            $.getJSON("authors.json", function (authors) {
+                $.getJSON("books.json", function (books) {
+                    for (var i = 0; i < books.length; i++) {
+                        if (books[i].type === "audiobook") {
+                            var $li = $("<li>");
+                            for (var j = 0; j < 5; j++) {
+                                if (books[i].type === "audiobook") {
+                                    var $book = $("<div>").addClass("audio"),
+                                        $image_div = $("<div>").addClass("image_div"),
+                                        $image = $("<img>").addClass("image_audio width_200 height_200"),
+                                        $info = $("<div>").addClass("info"),
+                                        $book_name = $("<a>").text(books[i].name).attr("alt", books[i].bookID).addClass("bk_name").attr("href", "authors/" + author_authorid(authors, books[i]) + "/books/" + books[i].bookID + "/book.html"),
+                                        $author_name = $("<a>").text(author_name(authors, books[i])).attr("alt", author_authorid(authors, books[i])).addClass("aut_name").attr("href", "authors/" + author_authorid(authors, books[i]) + "/author.html");
+                                    $book_name.attr("id", "book_href");
+                                    $author_name.attr("id", "author_href");
+                                    $info.append($book_name).append("<br>").append($author_name);
+                                    $image.attr("src", books[i].picture).attr("alt", books[i].name + ',' + author_name(authors, books[i]));
+                                    $image_div.append($image);
+                                    $book.append($image_div).append($info);
+                                    $li.append($book);
+                                    i++;
+                                    console.log('i:' + i);
+                                    if (i === books.length)
+                                        break;
+                                    if (j === 4) {
+                                        i--;
+                                    }
+                                } else {
+                                    if (j !== 0) j--;
+                                    i++;
+                                    if (i === books.length) break;
+                                }
+                            }
+                            $content.append($li);
+                        }
+                    }
+                });
+                callback($content);
+            });
+        },
+        pushPodcast = function (callback) {
+            var $content = $("<ul>");
+            $.getJSON("authors.json", function (authors) {
+                $.getJSON("books.json", function (books) {
+                    for (var i = 0; i < books.length; i++) {
+                        if (books[i].type === "podcast") {
+                            var $li = $("<li>");
+                            for (var j = 0; j < 5; j++) {
+                                if (books[i].type === "podcast") {
+                                    var $book = $("<div>").addClass("audio"),
+                                        $image_div = $("<div>").addClass("image_div"),
+                                        $image = $("<img>").addClass("image_audio width_200 height_200"),
+                                        $info = $("<div>").addClass("info"),
+                                        $book_name = $("<a>").text(books[i].name).attr("alt", books[i].bookID).addClass("bk_name").attr("href", "authors/" + author_authorid(authors, books[i]) + "/books/" + books[i].bookID + "/book.html"),
+                                        $author_name = $("<a>").text(author_name(authors, books[i])).attr("alt", author_authorid(authors, books[i])).addClass("aut_name").attr("href", "authors/" + author_authorid(authors, books[i]) + "/author.html");
+                                    $book_name.attr("id", "book_href");
+                                    $author_name.attr("id", "author_href");
+                                    $info.append($book_name).append("<br>").append($author_name);
+                                    $image.attr("src", books[i].picture).attr("alt", books[i].name + ',' + author_name(authors, books[i]));
+                                    $image_div.append($image);
+                                    $book.append($image_div).append($info);
+                                    $li.append($book);
+                                    i++;
+                                    console.log('i:' + i);
+                                    if (i === books.length)
+                                        break;
+                                    if (j === 4) {
+                                        i--;
+                                    }
+                                } else {
+                                    if (j !== 0) j--;
+                                    i++;
+                                    if (i === books.length) break;
+                                }
+                            }
+                            $content.append($li);
+                        }
+                    }
+                });
+                callback($content);
+            });
+        };
+
+    tabs.push({
+        "name" : "Подборка",
+        "content" : function (callback) {
+            var $content = $("<ul>");
+            pushBook(function(con) {
+                $content.append("<h2>Книги</h2>");
+                $content.append(con);
+                console.log("book");
+            });
+            pushAudio(function (con) {
+                $content.append("<h2>Аудиокниги</h2>");
+                $content.append(con);
+                console.log("audiobook");
+            }); 
+            pushPodcast(function (con) {
+                $content.append("<h2>Подкасты</h2>");
+                $content.append(con);
+                console.log("podcast");
+            });
+            callback(null, $content);
         }
     });
     tabs.push({
         "name" : "Книги",
         "content" : function (callback) {
             var $content = $("<ul>");
-            $.getJSON("authors.json", function (authors) {
-                $.getJSON("books.json", function (books) {
-                    for (let i = 0; i < books.length; i++) {
-                        if (books[i].type === "book") {
-                            let $li = $("<li>");
-                            for (let j = 0; j < 6; j++) {
-                                if (books[i].type === "book") {
-                                    let $book = $("<div>").addClass("book width_220 height_350"),
-                                        $image_div = $("<div>").addClass("image_div"),
-                                        $image = $("<img>").addClass("image_book width_200 height_305"),
-                                        $info = $("<div>").addClass("info"),
-                                        $book_name = $("<a>").text(books[i].name),
-                                        $author_name = $("<a>").text(author_name(authors, books[i]));
-                                    $book_name.attr("id", "book_href");
-                                    $info.append($book_name).append("<br>").append($author_name);
-                                    $image.attr("src", books[i].image).attr("alt", books[i].name + ',' + author_name(authors, books[i]));
-                                    $image_div.append($image);
-                                    $book.append($image_div).append($info);
-                                    $li.append($book);
-                                    i++;
-                                    console.log('i:' + i);
-                                    if (i === books.length)
-                                        break;
-                                    if (j === 5) {
-                                        i--;
-                                    }
-                                }
-                            }
-                            $content.append($li);
-                        }
-                    }
-                });
-                callback(null, $content);
-            }).fail(function (jqXHR, textStatus, error) {
-                console.log(jqXHR);
-                console.log(textStatus);
-                callback(error, null);
+            pushBook(function (con) {
+                $content.append(con);
             });
+            callback(null, $content);
         }
     });
     tabs.push({
         "name" : "Аудиокниги",
         "content" : function (callback) {
             var $content = $("<ul>");
-            $.getJSON("authors.json", function (authors) {
-                $.getJSON("books.json", function (books) {
-                    for (var i = 0; i < books.length; i++) {
-                        if (books[i].type === "audiobook") {
-                            var $li = $("<li>");
-                            for (var j = 0; j < 6; j++) {
-                                if (books[i].type === "audiobook") {
-                                    var $book = $("<div>").addClass("audio"),
-                                        $image_div = $("<div>").addClass("image_div"),
-                                        $image = $("<img>").addClass("image_audio width_200 height_200"),
-                                        $info = $("<div>").addClass("info"),
-                                        $book_name = $("<a>").text(books[i].name),
-                                        $author_name = $("<a>").text(author_name(authors, books[i]));
-                                    $book_name.attr("id", "book_href");
-                                    $info.append($book_name).append("<br>").append($author_name);
-                                    $image.attr("src", books[i].image).attr("alt", books[i].name + ',' + author_name(authors, books[i]));
-                                    $image_div.append($image);
-                                    $book.append($image_div).append($info);
-                                    $li.append($book);
-                                    i++;
-                                    console.log('i:' + i);
-                                    if (i === books.length)
-                                        break;
-                                    if (j === 5) {
-                                        i--;
-                                    }
-                                }
-                            }
-                            $content.append($li);
-                        }
-                    }
-                });
-                callback(null, $content);
-            }).fail(function (jqXHR, textStatus, error) {
-                console.log(jqXHR);
-                console.log(textStatus);
-                callback(error, null);
+            pushAudio(function (con) {
+                $content.append(con);
             });
+            callback(null, $content);
         }
     });
     tabs.push({
         "name" : "Подкасты",
         "content" : function (callback) {
             var $content = $("<ul>");
-            $.getJSON("authors.json", function (authors) {
-                $.getJSON("books.json", function (books) {
-                    for (var i = 0; i < books.length; i++) {
-                        if (books[i].type === "podcast") {
-                            var $li = $("<li>");
-                            for (var j = 0; j < 6; j++) {
-                                if (books[i].type === "podcast") {
-                                    var $book = $("<div>").addClass("audio"),
-                                        $image_div = $("<div>").addClass("image_div"),
-                                        $image = $("<img>").addClass("image_audio width_200 height_200"),
-                                        $info = $("<div>").addClass("info"),
-                                        $book_name = $("<a>").text(books[i].name),
-                                        $author_name = $("<a>").text(author_name(authors, books[i]));
-                                    $book_name.attr("id", "book_href");
-                                    $info.append($book_name).append("<br>").append($author_name);
-                                    $image.attr("src", books[i].image).attr("alt", books[i].name + ',' + author_name(authors, books[i]));
-                                    $image_div.append($image);
-                                    $book.append($image_div).append($info);
-                                    $li.append($book);
-                                    i++;
-                                    console.log('i:' + i);
-                                    if (i === books.length)
-                                        break;
-                                    if (j === 5) {
-                                        i--;
-                                    }
-                                }
-                            }
-                            $content.append($li);
-                        }
-                    }
-                });
-                callback(null, $content);
-            }).fail(function (jqXHR, textStatus, error) {
-                console.log(jqXHR);
-                console.log(textStatus);
-                callback(error, null);
+            pushPodcast(function (con) {
+                $content.append(con);
             });
+            callback(null, $content);
         }
     });
     $(document).ready(function () {
@@ -285,40 +235,6 @@ var main = function(){
             });
         });
         $(".headermenu a:first span").trigger("click");
-        $(".content").on("click", "#book_href", function () {
-            var link = "",
-                name = $(this).text(),
-                image, author;
-            $.getJSON("authors.json", function (authors) {
-                $.getJSON("books.json", function (books) {
-                    for (var i = 0; i < books.length; i++){
-                        if (books[i].name === name) {
-                            image = books[i].image;
-                            author = author_name(authors, books[i]);
-                            break;
-                        }
-                    }
-                    console.log(name);
-                    link += '<div class="one_book">' + 
-                                '<div class="book_desc">' +
-                                    '<div class="book_image">' +
-                                        '<img class="main_image" src="' + image + '" alt="' + name + ',' + author + '">' + 
-                                    '</div>' +
-                                    '<div class="author_name">' + 
-                                        '<p>' + author + '</p>' + 
-                                        '<p>' + name + '</p>' + 
-                                    '</div>' + 
-                                '</div><br>' + 
-                                '<div class="book_inf">' +
-                                    '<p>' + books[i].description + '</p>' + 
-                                '</div>' +  
-                            '</div>';
-                    $(".content").html(link);
-                    $("#main_name").html("");
-                    return false;
-                });
-            });
-        });
         function butfunc () {
             if ($(".searchinput").val() === "Ты идиот?") {
                 $("body").html("Идиот");
@@ -350,11 +266,12 @@ var main = function(){
                                                     $image_div = $("<div>").addClass("image_div"),
                                                     $image = $("<img>").addClass("image_book width_200 height_305"),
                                                     $info = $("<div>").addClass("info"),
-                                                    $book_name = $("<a>").text(books[i].name),
-                                                    $author_name = $("<a>").text(author_name(authors, books[i]));
+                                                    $book_name = $("<a>").text(books[i].name).attr("alt", books[i].bookID).addClass("bk_name").attr("href", "authors/" + author_authorid(authors, books[i]) + "/books/" + books[i].bookID + "/book.html"),
+                                                    $author_name = $("<a>").text(author_name(authors, books[i])).attr("alt", author_authorid(authors, books[i])).addClass("aut_name").attr("href", "authors/" + author_authorid(authors, books[i]) + "/author.html");
                                                 $book_name.attr("id", "book_href");
+                                                $author_name.attr("id", "author_href");
                                                 $info.append($book_name).append("<br>").append($author_name);
-                                                $image.attr("src", books[i].image).attr("alt", books[i].name + ',' + author_name(authors, books[i]));
+                                                $image.attr("src", books[i].picture).attr("alt", books[i].name + ',' + author_name(authors, books[i]));
                                                 $image_div.append($image);
                                                 $book.append($image_div).append($info);
                                                 $li.append($book);
@@ -384,11 +301,12 @@ var main = function(){
                                                     $image_div = $("<div>").addClass("image_div"),
                                                     $image = $("<img>").addClass("image_audio width_200 height_200"),
                                                     $info = $("<div>").addClass("info"),
-                                                    $book_name = $("<a>").text(books[i].name),
-                                                    $author_name = $("<a>").text(author_name(authors, books[i]));
+                                                    $book_name = $("<a>").text(books[i].name).attr("alt", books[i].bookID).addClass("bk_name").attr("href", "authors/" + author_authorid(authors, books[i]) + "/books/" + books[i].bookID + "/book.html"),
+                                                    $author_name = $("<a>").text(author_name(authors, books[i])).attr("alt", author_authorid(authors, books[i])).addClass("aut_name").attr("href", "authors/" + author_authorid(authors, books[i]) + "/author.html");
                                                 $book_name.attr("id", "book_href");
+                                                $author_name.attr("id", "author_href");
                                                 $info.append($book_name).append("<br>").append($author_name);
-                                                $image.attr("src", books[i].image).attr("alt", books[i].name + ',' + author_name(authors, books[i]));
+                                                $image.attr("src", books[i].picture).attr("alt", books[i].name + ',' + author_name(authors, books[i]));
                                                 $image_div.append($image);
                                                 $book.append($image_div).append($info);
                                                 $li.append($book);
@@ -418,11 +336,12 @@ var main = function(){
                                                     $image_div = $("<div>").addClass("image_div"),
                                                     $image = $("<img>").addClass("image_audio width_200 height_200"),
                                                     $info = $("<div>").addClass("info"),
-                                                    $book_name = $("<a>").text(books[i].name),
-                                                    $author_name = $("<a>").text(author_name(authors, books[i]));
+                                                    $book_name = $("<a>").text(books[i].name).attr("alt", books[i].bookID).addClass("bk_name").attr("href", "authors/" + author_authorid(authors, books[i]) + "/books/" + books[i].bookID + "/book.html"),
+                                                    $author_name = $("<a>").text(author_name(authors, books[i])).attr("alt", author_authorid(authors, books[i])).addClass("aut_name").attr("href", "authors/" + author_authorid(authors, books[i]) + "/author.html");
                                                 $book_name.attr("id", "book_href");
+                                                $author_name.attr("id", "author_href");
                                                 $info.append($book_name).append("<br>").append($author_name);
-                                                $image.attr("src", books[i].image).attr("alt", books[i].name + ',' + author_name(authors, books[i]));
+                                                $image.attr("src", books[i].picture).attr("alt", books[i].name + ',' + author_name(authors, books[i]));
                                                 $image_div.append($image);
                                                 $book.append($image_div).append($info);
                                                 $li.append($book);
@@ -447,6 +366,7 @@ var main = function(){
                 $(".searchinput").val("Ты идиот?");
             }
         }
+
         $(".searchbutton").on("click", function () {
             butfunc();
             return false;
@@ -484,4 +404,14 @@ var main = function(){
     });
 };
 
-$(".document").ready(main);
+$(".document").ready(function () {
+    var params = window.location.pathname.split('/');
+    if (params.length > 2) {
+        $(".authorization").html("");
+        $(".authorization").append($("<a>").attr("href", "/users/" + params[2] + "/busket.html").text("Избранное").addClass("izbr"));
+        $(".authorization").append($("<a>").attr("href", "/index.html").text("Выход"));
+    } else {
+        $("header .container .name a").attr("href", "/index.html");
+    }
+    main();
+});

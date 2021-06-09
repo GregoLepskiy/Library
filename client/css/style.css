@@ -38,6 +38,7 @@ body {
     padding: 0;
     position: relative;
     box-sizing: border-box;
+    padding-left: 15px;
 }
 .menu > ul:before,
 .menu > ul:after {
@@ -63,9 +64,11 @@ body {
 }
 .menu-mobile {
     display: none;
+    border: solid 2px #922f1b;
 }
 .menu > ul > li:hover a {
     color: #e3e3e3;
+    border-left: solid 1px #922f1b;
 }
 .menu > ul > li > ul {
     display: none;
@@ -78,6 +81,8 @@ body {
     margin: 0;
     list-style: none;
     box-sizing: border-box;
+    border-left: solid 1px #922f1b;
+    border-bottom: solid 1px #922f1b;
 }
 .menu > ul > li > ul:before,
 .menu > ul > li > ul:after {
@@ -164,6 +169,46 @@ body {
         display: block;
     }
 }  
+
+.content .delete {
+    margin: 0;
+    width: 80%;
+    margin-left: 10%;
+}
+
+.delete tr {
+    border-bottom : 1px solid;
+}
+
+.delete tr:first-child {
+    background-color: #e1ad95;
+    color: #922f1b;
+}
+
+.delete tr:last-child {
+    border: none;
+}
+
+.delete tr:last-child td {
+    padding-bottom: 20px;
+}
+
+.delete td {
+    padding: 5px;
+}
+
+.delete td:last-child {
+    border-left: 1px solid black;
+}
+
+.delete .\.ad {
+    color: #922f1b;
+    font-weight: 900;
+}
+
+.delete .\.ad:hover {
+    cursor: pointer;
+}
 
 /**/
 /**/
@@ -254,6 +299,10 @@ header a {
     width: 25%;
     text-align: right;
     padding-top: 15px;
+}
+
+.authorization .izbr {
+    margin-right: 10px;
 }
 
 header .headermenu {
@@ -388,6 +437,11 @@ main .maincontainer {
     cursor: pointer;
 }
 
+.info a {
+    text-decoration: none;
+    color: black;
+}
+
 .content .audio {
     transition: 1s all;
     display: flex;
@@ -432,24 +486,149 @@ main .maincontainer {
     font-size: 150%;
 }
 
-.one_book .book_desc {
+.one_book .book_alm {
     display: flex;
     width: 100%;
     padding-bottom: 20px;
 }
 
-.book_desc .book_image {
+.book_alm .book_image {
     width: 50%;
     height: auto;
 }
 
-.book_desc .main_image {
-    width: 50%;
+.book_image .main_image {
+    width: 80%;
+    float: left;
 }
 
-.book_desc .author_name {
+.book_alm .author_name {
     width: 50%;
     text-align: right;
+}
+
+.book_alm .book_desc {
+    margin-top: 70px;
+    text-align: left;
+}
+
+.but_div .buy_but {
+    transition: 1s all;
+    margin-top: 20px;
+    width: 90px;
+    height: 40px;
+    border: 2px solid #922f1b;
+    border-radius: 15px;
+    color: black;
+    background-color: #e1ad95;
+    font-size: 16px;
+}
+
+.buy_but:hover {
+    transition: 1s all;
+    border-color: #e1ad95;
+    background-color: #922f1b;
+    color: #e3e3e3;
+}
+
+.buy_but:active {
+    transition: 0.1s all;
+    transform: scale(0.9);
+}
+
+.but_div .add_but {
+    margin-left: 15px;
+    transition: 1s all;
+    margin-top: 20px;
+    width: 90px;
+    height: 40px;
+    border: 2px solid #922f1b;
+    border-radius: 15px;
+    color: black;
+    background-color: #e1ad95;
+    font-size: 16px;
+}
+
+.add_but:hover {
+    transition: 1s all;
+    border-color: #e1ad95;
+    background-color: #922f1b;
+    color: #e3e3e3;
+}
+
+.add_but:active {
+    transition: 0.1s all;
+    transform: scale(0.9);
+}
+
+.one_book .book_desc {
+    width: 100%;
+}
+
+/**/
+/**/
+/**/
+/*admin*/
+/**/
+/**/
+/**/
+
+.content .addition {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+}
+
+.addition .description{
+    display: flex;
+    width: 100%;
+}
+
+.description .names {
+    float: left;
+    display: flex;
+    flex-direction: column;
+    line-height: 1.35;
+    width: 25%;
+}
+
+.description .fields {
+    float: right;
+    display: flex;
+    flex-direction: column;
+}
+
+.addition .button {
+    width: 100%;
+    margin: 0;
+    margin-top: 5px;
+}
+
+.button .accept {
+    transition: 0.2s all;
+    margin: 0;
+    height: 30px;
+    width: 70px;
+    padding: 5px;
+    border: 1px solid;
+    border-radius: 10px;
+    background-color: #e3e3e3;
+    outline: none;
+    font-family: 'Roboto', sans-serif;
+    font-size: 14px;
+    font-weight: 900;
+}
+
+.accept:hover {
+    transition: 0.2s all;
+    color: #e3e3e3;
+    background-color: #922f1b;
+}
+
+.accept:active {
+    transition: 0.1s all;
+    color: #922f1b;
+    background-color: #e3e3e3;
 }
 
 /**/
